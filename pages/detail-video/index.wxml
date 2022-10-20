@@ -1,0 +1,4 @@
+<video class="video" src="{{mvURLInfo.url}}" loop></video>
+<view>
+    <view wx:for="{{100}}" wx:key="*this">{{item}}</view>
+</view>
