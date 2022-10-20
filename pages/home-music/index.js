@@ -2,6 +2,7 @@
 import {
     getBanners
 } from '../../service/api_music'
+import {rankingStore} from '../../store/index'
 import queryRect from '../../utils/query-rect'
 import throttle from '../../utils/throttle'
 const throttleQueryRect = throttle(queryRect,1000)
@@ -12,11 +13,18 @@ Page({
      */
     data: {
         banners: [],
-        swiperHeight:0
+        swiperHeight:0,
+        recommendSongs:[]
     },
     onLoad() {
         this.getPageData()
-
+        rankingStore.dispatch("getRankingDataAction")
+        rankingStore.onState("hotRanking",res=>{
+            if(!res.tracks) return 
+            const recommendSongs = res.tracks.slice(0,6)
+            // console.log(recommendSongs);
+            this.setData({recommendSongs})
+        })
     },
     handleSearchClick() {
         wx.navigateTo({

@@ -1,4 +1,4 @@
-<video class="video" src="{{mvURLInfo.url}}" loop></video>
+<video class="video" src="{{mvURLInfo.url}}" autoplay referrer-policy="origin" loop></video>
 <view>
     <view wx:for="{{100}}" wx:key="*this">{{item}}</view>
 </view>
