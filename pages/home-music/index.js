@@ -1,6 +1,6 @@
 // pages/home-music/index.js
 import {
-    getBanners
+    getBanners, getSongMenu
 } from '../../service/api_music'
 import {rankingStore} from '../../store/index'
 import queryRect from '../../utils/query-rect'
@@ -14,7 +14,9 @@ Page({
     data: {
         banners: [],
         swiperHeight:0,
-        recommendSongs:[]
+        recommendSongs:[],
+        hotSongMenu:[],
+        recommendSongMenu:[]
     },
     onLoad() {
         this.getPageData()
@@ -36,6 +38,14 @@ Page({
             this.setData({
                 banners: res.banners
             })
+        })
+        getSongMenu("全部").then(res=>{
+            // console.log(res);
+            this.setData({hotSongMenu:res.playlists})
+        })
+        getSongMenu("日语").then(res=>{
+            // console.log(res);
+            this.setData({recommendSongMenu:res.playlists})
         })
 
     },
