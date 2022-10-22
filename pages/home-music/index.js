@@ -4,7 +4,8 @@ import {
     getSongMenu
 } from '../../service/api_music'
 import {
-    rankingStore
+    rankingStore,
+    rankingMap
 } from '../../store/index'
 import queryRect from '../../utils/query-rect'
 import throttle from '../../utils/throttle'
@@ -47,6 +48,19 @@ Page({
             url: '/pages/detail-search/index',
         })
     },
+    handleMoreClick() {
+        this.navigateDetailToSongPage("hotRanking")
+
+    },
+    handleRankingItemClick(e) {
+        const {idx}=e.currentTarget.dataset
+        this.navigateDetailToSongPage(rankingMap[idx])
+    },
+    navigateDetailToSongPage(rankingName){
+        wx.navigateTo({
+            url: `/pages/detail-songs/index?ranking=${rankingName}&type=rank`,
+        })
+    },
     getPageData() {
         getBanners().then(res => {
             this.setData({
@@ -54,13 +68,11 @@ Page({
             })
         })
         getSongMenu("全部").then(res => {
-            // console.log(res);
             this.setData({
                 hotSongMenu: res.playlists
             })
         })
         getSongMenu("日语").then(res => {
-            // console.log(res);
             this.setData({
                 recommendSongMenu: res.playlists
             })
@@ -92,7 +104,6 @@ Page({
                     [idx]: rankingObj
                 }
             })
-            console.log(this.data.rankings)
         }
     },
 })

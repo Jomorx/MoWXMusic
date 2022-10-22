@@ -6,9 +6,7 @@ App({
     },
     onLaunch(){
          const info = wx.getSystemInfoSync()
-        // console.log(info);
         this.globalData.screenWidth=info.screenWidth
         this.globalData.screenHeight=info.screenHeight
-
         }
 })

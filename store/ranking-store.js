@@ -1,7 +1,7 @@
 import {HYEventStore} from 'hy-event-store';
 import {getRankings} from '../service/api_music'
 
-const rankingMap = { 0: "newRanking", 1: "hotRanking", 2: "originRanking", 3: "upRanking" }
+export const rankingMap = { 0: "newRanking", 1: "hotRanking", 2: "originRanking", 3: "upRanking" }
 
 export const rankingStore = new HYEventStore({
     state:{
@@ -18,7 +18,6 @@ export const rankingStore = new HYEventStore({
         getRankings(i).then(res => {
           const rankingName = rankingMap[i]
           ctx[rankingName] = res.playlist
-          console.log(res.playlist);
         })
       }
         }

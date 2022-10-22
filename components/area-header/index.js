@@ -5,8 +5,8 @@ Component({
      */
     properties: {
         title:{
-            type:String,
-            value:"title"
+            type:String|null,
+            value:""
         },
         rightText:{
             type:String,
@@ -29,6 +29,8 @@ Component({
      * 组件的方法列表
      */
     methods: {
-
+        handleRightClick(){
+            this.triggerEvent("click")
+        }
     }
 })
