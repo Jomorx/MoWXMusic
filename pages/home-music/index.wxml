@@ -21,4 +21,12 @@
 <song-menu-area title="热门歌单" songMenu="{{hotSongMenu}}" wx:if="{{hotSongMenu.length}}"></song-menu-area>
 
 <song-menu-area title="推荐歌单" songMenu="{{recommendSongMenu}}" wx:if="{{recommendSongMenu.length}}"></song-menu-area>
-//TODOS
+
+<view class="ranking">
+  <area-header title="巅峰榜" showRight="{{false}}"></area-header>
+  <view class="ranking-list">
+    <block wx:for="{{rankings}}" wx:key="name">
+      <ranking-area-item item="{{item}}"></ranking-area-item>
+    </block>
+  </view>
+</view>
