@@ -1,4 +1,15 @@
+<wxs src="/utils/format.wxs" module="format"></wxs>
 <video class="video" src="{{mvURLInfo.url}}" autoplay referrer-policy="origin" loop></video>
-<view>
-    <view wx:for="{{100}}" wx:key="*this">{{item}}</view>
+<view class="video-body">
+    <view class="video-info">
+        <view class="name"><text>{{mvDetail.name}}</text></view>
+        <view class="desc"><text>{{mvDetail.artistName}}</text></view>
+        <view class="desc"><text>{{format.formatCount(mvDetail.playCount)}}次播放 - {{mvDetail.publishTime}}</text></view>
+    </view>
+    <view>
+        <view class="title">推荐视频</view>
+        <view wx:for="{{relatedVideos}}" wx:key="id">
+            <video-item-v2 video="{{item}}" />
+        </view>
+    </view>
 </view>

@@ -1,0 +1,18 @@
+<!--components/video-item-v2/index.wxml-->
+<wxs src="/utils/format.wxs" module="format"></wxs>
+<view class="container" bindtap="handleVideoClick" data-id="{{video.id}}">
+    <view class="cover">
+        <image class="bg" src="{{video.cover}}" mode="widthFix" />
+        <view class="play-time">
+        <image class="icon" src="../../assets/images/icons/play_icon.png"></image>
+        <text>{{format.formatCount(video.playCount)}}</text>
+        </view>
+    </view>
+    <view class="info">
+        <text style="font-size: 35rpx;font-weight: 550;">{{video.name}}</text>
+        <view style="display: flex;justify-content: space-between;">
+            <text class="author">{{video.artistName}}</text>
+            <text class="author">{{format.formatDuration(video.duration)}}</text>
+        </view>
+    </view>
+</view>

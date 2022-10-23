@@ -6,7 +6,6 @@ import {
 
 // pages/detail-video/index.js
 Page({
-
     /**
      * 页面的初始数据
      */
@@ -38,7 +37,7 @@ Page({
         })
         getReatedVideo(id).then(res => {
             this.setData({
-                relatedVideos: res.data
+                relatedVideos: res.mvs
             })
 
         })

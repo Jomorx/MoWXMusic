@@ -14,6 +14,6 @@ export function getMVUrl(id){
     return moRequest.get("/mv/url",{id})
 }
 
-export function getReatedVideo(id){
-    return moRequest.get("/related/allvideo",{id})
+export function getReatedVideo(mvid){
+    return moRequest.get("/simi/mv",{mvid})
 }
