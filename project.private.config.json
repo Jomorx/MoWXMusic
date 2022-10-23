@@ -16,6 +16,13 @@
                     "pathName": "pages/detail-video/index",
                     "query": "id=14480854",
                     "scene": null
+                },
+                {
+                    "name": "search-detail",
+                    "pathName": "pages/detail-search/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
                 }
             ]
         }
