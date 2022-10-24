@@ -13,7 +13,7 @@ Page({
         suggestSongs: [],
         suggestSongsNodes: [],
         searchKeyword: "",
-        resultSongs:[]
+        resultSongs: []
     },
     onLoad(options) {
         this.getPageData()
@@ -28,8 +28,9 @@ Page({
         if (searchKeyword.length === 0) {
             this.setData({
                 suggestSongs: [],
-                resultSongs:[]
+                resultSongs: []
             })
+            debounceGetSearchSuggest.cancel()
             return
         }
         debounceGetSearchSuggest(searchKeyword).then(({
@@ -37,18 +38,21 @@ Page({
                 allMatch
             }
         }) => {
+            this.setData({
+                suggestSongs: allMatch
+            })
+            if (!allMatch) return
+            //转换为node 
             const suggestKeywords = allMatch.map(item => item.keyword)
             const suggestSongsNodes = []
             for (const keyword of suggestKeywords) {
-                const nodes = stringToNodes(keyword,searchKeyword)
+                const nodes = stringToNodes(keyword, searchKeyword)
                 suggestSongsNodes.push(nodes)
             }
             this.setData({
                 suggestSongsNodes: suggestSongsNodes
             })
-            this.setData({
-                suggestSongs: allMatch
-            })
+
         })
     },
     getPageData() {
@@ -59,15 +63,27 @@ Page({
             })
         })
     },
-    handleSearchAction(e){
-        const {searchKeyword} = this.data
-        getSearchResult(searchKeyword).then(({result:{songs}})=>{
-            this.setData({resultSongs:songs})
+    handleSearchAction(e) {
+        const {
+            searchKeyword
+        } = this.data
+        getSearchResult(searchKeyword).then(({
+            result: {
+                songs
+            }
+        }) => {
+            this.setData({
+                resultSongs: songs
+            })
         })
     },
-    handleKeywordItemClick(e){
-        const {keyword}= e.currentTarget.dataset
-        this.setData({searchKeyword:keyword})
+    handleKeywordItemClick(e) {
+        const {
+            keyword
+        } = e.currentTarget.dataset
+        this.setData({
+            searchKeyword: keyword
+        })
         this.handleSearchAction()
     }
 })
