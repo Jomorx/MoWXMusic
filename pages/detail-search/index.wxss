@@ -1,8 +1,13 @@
 /* pages/detail-search/index.wxss */
 page{
     padding: 0 20rpx;
+    padding-top: 56px;
 }
-
+.search{
+    position: fixed;
+    inset: 0 20rpx auto 20rpx;
+    background-color: #f7f7f7
+}
 .list{
     display: flex;
     flex-wrap: wrap;
