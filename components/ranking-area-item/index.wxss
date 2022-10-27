@@ -6,7 +6,8 @@
   border-radius: 12rpx;
   overflow: hidden;
   margin-bottom: 20rpx;
-  width: 355px;
+  /* width: 355px; */
+  width: 100%;
 }
 
 .content {

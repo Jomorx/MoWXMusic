@@ -29,8 +29,6 @@ Component({
      */
     methods: {
         handleVideoClick(e){
-            // console.log(e.currentTarget.dataset.vid);
-            // this.getPageData(e.currentTarget.dataset.id)
             wx.navigateTo({
               url: `/pages/detail-video/index?id=${e.currentTarget.dataset.id}`,
             })

@@ -1,66 +1,111 @@
+import {
+    getSongDetail, getSongLyric
+} from "../../service/api_player"
+import {
+    audioContext
+} from "../../store/index"
+import { parseLyric } from "../../utils/parse-lyric"
+
 // pages/music-player/index.js
 Page({
+    data: {
+        id: 0,
+        currentSong: {},
+        currentPage: 0,
+        lyricInfos:[],
+        currentLyricText:"",
+        currentLyricIndex:0,
+        contentHeight: 0,
+        isMusicLyric: true,
+        currentTime: 0,
+        sliderValue: 0,
+        isSliderChanging: false
+    },
+    onLoad({
+        id
+    }) {
+        this.setData({
+            id
+        })
+        this.getPageData(id)
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+        const {
+            screenHeight,
+            statusBarHeight,
+            navBarHeight,
+            deviceRadio
+        } = getApp().globalData
+        this.setData({
+            contentHeight: screenHeight - statusBarHeight - navBarHeight,
+            isMusicLyric: deviceRadio >= 2
+        })
+        audioContext.stop()
+        audioContext.src = `http://music.163.com/song/media/outer/url?id=${id}.mp3`
+        // audioContext.autoplay = true
+        audioContext.onCanplay(() => {
+            // audioContext.play()
+        })
+        audioContext.onTimeUpdate(() => {
+            //根据时间修改slidervalue值
+            if (!this.data.isSliderChanging) {
+                this.setData({
+                    currentTime: audioContext.currentTime * 1000,
+                    sliderValue: audioContext.currentTime * 1000 / this.data.currentSong.dt * 100
+                })
+            }
+            //设置歌词
+            for (let i = 0; i < this.data.lyricInfos.length; i++) {
+                const lyricInfo = this.data.lyricInfos[i];
+                if(lyricInfo.time>this.data.currentTime){
+                    if(this.data.currentLyricIndex!==i-1){
+                        console.log(i-1);
+                        const currentLyricText = this.data.lyricInfos[i-1].lyricText
+                        this.setData({currentLyricText,currentLyricIndex:i-1})
+                    }
+                    break
+                }
+                
+            }
+        })
+    },
+    getPageData(id) {
+        getSongDetail(id).then(res => {
+            console.log(id);
+            this.setData({
+                currentSong: res.songs[0]
+            })
+        })
+        getSongLyric(id).then(res=>{
+            const lyricString = res.lrc.lyric
+            const lyricInfos = parseLyric(lyricString)
+            this.setData({lyricInfos})
+        })
+    },
+    handleSwiperChange(e) {
+        const {
+            current
+        } = e.detail
+        this.setData({
+            currentPage: current
+        })
+    },
+    handleSliderChange(e) {
+        const currentTime = this.data.currentSong.dt * e.detail.value / 100
+        audioContext.pause();
+        audioContext.seek(currentTime / 1000)
+        this.setData({
+            sliderValue: e.detail.value,
+            isSliderChanging:false
+        })
+        this.setData({
+            currentTime: currentTime
+        })
+    },
+    handleSliderChanging(e) {
+        const currentTime = this.data.currentSong.dt * e.detail.value / 100
+        this.setData({
+            isSliderChanging: true,
+            currentTime
+        })
+    }
 })
