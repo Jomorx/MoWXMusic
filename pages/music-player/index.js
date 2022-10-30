@@ -19,7 +19,8 @@ Page({
         isMusicLyric: true,
         currentTime: 0,
         sliderValue: 0,
-        isSliderChanging: false
+        isSliderChanging: false,
+        lyricScrollTop:0
     },
     onLoad({
         id
@@ -41,9 +42,9 @@ Page({
         })
         audioContext.stop()
         audioContext.src = `http://music.163.com/song/media/outer/url?id=${id}.mp3`
-        // audioContext.autoplay = true
+        audioContext.autoplay = true
         audioContext.onCanplay(() => {
-            // audioContext.play()
+            audioContext.play()
         })
         audioContext.onTimeUpdate(() => {
             //根据时间修改slidervalue值
@@ -57,10 +58,11 @@ Page({
             for (let i = 0; i < this.data.lyricInfos.length; i++) {
                 const lyricInfo = this.data.lyricInfos[i];
                 if(lyricInfo.time>this.data.currentTime){
+                    if(i===0) break
                     if(this.data.currentLyricIndex!==i-1){
-                        console.log(i-1);
                         const currentLyricText = this.data.lyricInfos[i-1].lyricText
-                        this.setData({currentLyricText,currentLyricIndex:i-1})
+                        this.setData({currentLyricText,
+                            currentLyricIndex:i-1,lyricScrollTop:35*i-1})
                     }
                     break
                 }

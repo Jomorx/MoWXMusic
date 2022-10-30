@@ -39,10 +39,12 @@
         </view>
     </swiper-item>
     <swiper-item>
-        <scroll-view class="lyric-list" scroll-y>
-            <view wx:for="{{lyricInfos}}" wx:key="index">
-            <view class="item">{{item.lyricText}}</view>
-            </view>
+        <scroll-view class="lyric-list" scroll-y 
+                    scroll-top="{{lyricScrollTop}}"
+                    scroll-with-animation>
+            <block wx:for="{{lyricInfos}}" wx:key="index">
+            <view class="item {{currentLyricIndex===index?'active':''}}">{{item.lyricText}}</view>
+            </block>
         </scroll-view>
     </swiper-item>
 </swiper>

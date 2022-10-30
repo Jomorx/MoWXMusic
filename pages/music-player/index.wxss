@@ -46,7 +46,7 @@ page{
   
   .album .image {
     width: 100%;
-    border-radius: 12rpx;
+    border-radius: 50%;
   }
   
   /* 歌曲信息 */
@@ -123,7 +123,12 @@ page{
     height: 100%;
     overflow: hidden;
   }
-  
+  .item:first-of-type{
+      padding-top: calc(50% + 160px);
+  }
+  .item:last-of-type{
+    padding-bottom: calc(50% + 160px);
+}
   ::-webkit-scrollbar {
     width: 0;
     height: 0;
@@ -136,12 +141,10 @@ page{
     font-size: 28rpx;
     text-align: center;
     color: #989898;
-  
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
   .lyric-list .item.active {
     color: #26ce8a;
     font-size: 36rpx;
